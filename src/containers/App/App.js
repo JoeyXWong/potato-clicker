@@ -4,7 +4,7 @@ import Layout from "../../components/UI/Layout";
 class App extends Component {
   state = {
     totalPotatoes: 0,
-    potatoGeneration: 0,
+    potatoGeneration: 1.0,
     clickUpdateAmount: 1.0,
     upgradesList: [{ name: "Potato Farmer", cost: 25, increase: 1 }]
   };
@@ -16,7 +16,9 @@ class App extends Component {
   generatePotatoes = () => {
     this.setState(prevState => {
       return {
-        totalPotatoes: prevState.totalPotatoes + prevState.potatoGeneration
+        totalPotatoes: (
+          +prevState.totalPotatoes + +prevState.potatoGeneration
+        ).toFixed(2)
       };
     });
   };
@@ -28,7 +30,9 @@ class App extends Component {
   handleIncrementClickCounter = () => {
     this.setState(prevState => {
       return {
-        totalPotatoes: prevState.totalPotatoes + prevState.clickUpdateAmount
+        totalPotatoes: (
+          +prevState.totalPotatoes + +prevState.clickUpdateAmount
+        ).toFixed(2)
       };
     });
   };
@@ -43,12 +47,14 @@ class App extends Component {
       console.log("New Obj", changedUpgrades);
       changedUpgrades[indexOfChange] = {
         name: upgrade.name,
-        cost: (upgrade.cost * 1.1).toFixed(0),
-        increase: (upgrade.increase * 1.1).toFixed(2)
+        cost: (+upgrade.cost * 1.1).toFixed(0),
+        increase: (+upgrade.increase * 1.1).toFixed(2)
       };
       return {
-        potatoGeneration: prevState.potatoGeneration + upgrade.increase,
-        totalPotatoes: prevState.totalPotatoes - upgrade.cost,
+        potatoGeneration: (
+          +prevState.potatoGeneration + +upgrade.increase
+        ).toFixed(2),
+        totalPotatoes: (+prevState.totalPotatoes - +upgrade.cost).toFixed(2),
         upgradesList: changedUpgrades
       };
     });
